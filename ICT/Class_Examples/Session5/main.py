@@ -125,8 +125,11 @@ cur.execute(new_var)
 conn.commit()
 
 
-# Get measures
-for i in range(1,100):
+## Get measures
+# NUmber of measures
+n = 5
+
+for i in range(1,n):
 
     # Save current beginning time
     start = time.time()
@@ -177,47 +180,47 @@ for i in range(1,100):
     cur.execute(query)
 
     # Write Temperature measurement from Pressure sensor
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (1, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp_p,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (2, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp_p,current_time)
     cur.execute(query)
 
     # Write Humidity measurement from HUmidity sensor
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (2, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(humidity,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (3, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(humidity,current_time)
     cur.execute(query)
 
     # Write Temperature measurement from Humidity sensor
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (2, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp_h,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (4, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp_h,current_time)
     cur.execute(query)
 
     # Write Temperature measurement from Temperature sensor
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (3, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (5, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp,current_time)
     cur.execute(query)
 
     # Write Magnetometer (compass) measurement from Magnetometer sensor
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (4, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(compass,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (6, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(compass,current_time)
     cur.execute(query)
 
     # Write Accelerometer measurement from Accelerometer sensor
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (5, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_acc,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (7, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_acc,current_time)
     cur.execute(query)
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (5, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_acc,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (8, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_acc,current_time)
     cur.execute(query)
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (5, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_acc,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (9, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_acc,current_time)
     cur.execute(query)
 
     # Write Gyroscope measurement from Gyroscope sensor
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (6, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_gyro,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (10, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_gyro,current_time)
     cur.execute(query)
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (6, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_gyro,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (11, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_gyro,current_time)
     cur.execute(query)
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (6, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_gyro,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (12, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_gyro,current_time)
     cur.execute(query)
 
     # Write IMU measurement from IMU (processed) sensor
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (7, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_IMU,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (13, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_IMU,current_time)
     cur.execute(query)
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (7, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_IMU,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (14, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_IMU,current_time)
     cur.execute(query)
-    query = "INSERT INTO measures (variable_id, measure, date) VALUES (7, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_IMU,current_time)
+    query = "INSERT INTO measures (variable_id, measure, date) VALUES (15, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_IMU,current_time)
     cur.execute(query)
 
     # Save current end time
@@ -229,6 +232,9 @@ for i in range(1,100):
     
     # Make measurements every second
     time.sleep(1 - elapsed_time) # Sleep for 1 second taking into account the elapsed time
+
+    # Commit the changes
+    conn.commit()
 
 
 

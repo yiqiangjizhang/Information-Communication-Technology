@@ -1,3 +1,5 @@
+# REST SERVER 
+
 
 # Import Flask
 from flask import Flask, redirect
@@ -256,11 +258,5 @@ def imu_history():
 # Debug
 if __name__ =='__main__':
     app.run(debug=True)
-
-
-
-
-
-
 
 
