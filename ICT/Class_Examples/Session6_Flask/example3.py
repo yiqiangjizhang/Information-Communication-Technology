@@ -1,6 +1,6 @@
 
 # Import Flask
-from flask import Flask, redirect
+from flask import Flask
 from sense_emu import SenseHat
 import datetime
 from flask import jsonify
@@ -15,40 +15,13 @@ app = Flask(__name__)
 @app.route('/')
 # Function
 def index():
-    message = "Raspberry PI ICT REST Server"
-    return message
+    return "Raspberry PI ICT REST Server"
 
 
-# Create a new sensors route
-# (http://127.0.0.1:5000/sensors?origin={temperature,pressure,humidity,accelerometer,gyroscope,magnetometer,imu})
-@app.route('/sensors')
-# Function to show all available sensors
-def sensors():
-    origin = request.args.get('origin')
-    if origin is None:
-        return "Select sensor: /sensors?origin={temperature,pressure,humidity,accelerometer,gyroscope,magnetometer,imu}"
-    else:
-        if origin == 'temperature':
-            return redirect('/sensors/temperature')
-        elif origin == 'pressure':
-            return redirect('/sensors/temperature')
-        elif origin == 'humidity':
-            return redirect('/sensors/humidity')
-        elif origin == 'acceloremeter':
-            return redirect('sensors/accelerometer')
-        elif origin == 'gyroscope':
-            return redirect('sensors/gyroscope')
-        elif origin == 'magnetometer':
-            return redirect('sensors/magnetometer')
-        elif origin == 'imu':
-            return redirect('sensors/imu')
-
-
-## Sensors
-# Create a new temperature route 
-@app.route('/sensors/temperature')
+# Create a new temperature route
+@app.route('/temperature')
 # Function to get temperature from temperature sensor
-def temp(): 
+def temp():
     temp = sense.get_temperature()
     # Create a dictionary
     data = dict()
@@ -57,7 +30,7 @@ def temp():
     data['time_stamp'] = "{0:%Y-%m-%dT%H:%M:%S.%fZ}".format(datetime.datetime.utcnow())
     return jsonify(data)
 
-@app.route('/sensors/temperature/pressure')
+@app.route('/temperature/pressure')
 # Function to get temperature from pressure sensor
 def temp_pressure():
     temp_p = sense.get_temperature_from_pressure()
@@ -68,7 +41,7 @@ def temp_pressure():
     data['time_stamp'] = "{0:%Y-%m-%dT%H:%M:%S.%fZ}".format(datetime.datetime.utcnow())
     return jsonify(data)
 
-@app.route('/sensors/temperature/humidity')
+@app.route('/temperature/humidity')
 # Function to get temperature from humidity sensor
 def temp_humidity():
     temp_h = sense.get_temperature_from_humidity()
@@ -79,9 +52,8 @@ def temp_humidity():
     data['time_stamp'] = "{0:%Y-%m-%dT%H:%M:%S.%fZ}".format(datetime.datetime.utcnow())
     return jsonify(data)
 
-
 # Pressure route
-@app.route('/sensors/pressure')
+@app.route('/pressure')
 # Function to get pressure from presure sensor
 def pressure():
     pressure = sense.get_pressure()
@@ -93,7 +65,7 @@ def pressure():
     return jsonify(data)
 
 # Humidity route
-@app.route('/sensors/humidity')
+@app.route('/humidity')
 # Function to get pressure from presure sensor
 def humidty():
     humidity = sense.get_humidity()
@@ -105,7 +77,7 @@ def humidty():
     return jsonify(data)
 
 # Compass route
-@app.route('/sensors/compass')
+@app.route('/compass')
 # Function to get magnetometer (compass) from magnetometer sensor
 def compass():
     compass = sense.get_compass()
@@ -118,7 +90,7 @@ def compass():
 
 
 # Accelerometer route
-@app.route('/sensors/accelerometer')
+@app.route('/accelerometer')
 # Function to get accelerometer from accelerometer sensor
 def accelerometer():
     # Read accelerometer data from accelerometer sensor
@@ -157,7 +129,7 @@ def gyroscope():
 
 
 # IMU route
-@app.route('/sensors/imu')
+@app.route('/imu')
 # Function to get IMU from IMU sensor (processed)
 def imu():
     # Read IMU data from IMU sensor (processed)
@@ -176,84 +148,28 @@ def imu():
     return jsonify(data)
 
 
-## History Requests
-# http://127.0.0.1:5000/sensors/temperature/history?from=2021-05-11&to=2021-05-12
+## Requests
+# http://127.0.0.1:5000/temperature/history?from=2021-05-11&to=2021-05-12
 
 # Temperature history
-@app.route('/sensors/temperature/history')
-# Request history 
+@app.route('/temperature/history')
+# Function to get IMU from IMU sensor (processed)
 def temp_history():
     from_date = request.args.get('from')
     to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Temperature from Pressure Sensors history
-@app.route('/sensors/temperature/presssure/history')
-# Request history 
-def temp_p_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Temperature from Humidity sensor history
-@app.route('/sensors/temperature/humidity/history')
-# Request history 
-def temp_h_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Pressure history
-@app.route('/sensors/pressure/history')
-# Request history 
-def pressure_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# HUmidity history
-@app.route('/sensors/humidity/history')
-# Request history 
-def humidity_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Compass history
-@app.route('/sensors/compass/history')
-# Request history 
-def compass_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Accelerometer history
-@app.route('/sensors/accelerometer/history')
-# Request history 
-def accelerometer_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Gyroscope history
-@app.route('/sensors/accelerometer/history')
-# Request history 
-def gyroscope_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# IMU history
-@app.route('/sensors/imu/history')
-# Request history 
-def imu_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-
+    print(from_date)
+    print(to_date)
+    temp = sense.get_temperature()
+    return "Temperature: {0}".format(temp)
 
 # Debug
 if __name__ =='__main__':
     app.run(debug=True)
+
+
+
+
+
+
+
 

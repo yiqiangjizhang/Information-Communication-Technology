@@ -26,7 +26,19 @@ def index():
 def sensors():
     origin = request.args.get('origin')
     if origin is None:
-        return "Select sensor: /sensors?origin={temperature,pressure,humidity,accelerometer,gyroscope,magnetometer,imu}"
+        # Create a dictionary
+        data = dict()
+        # Save variables
+        data['00_message'] = "Sensors:"
+        data['temperature'] = "Temperature"
+        data['pressure'] = "Pressure"
+        data['humidity'] = "Humidity"
+        data['accelerometer'] = "Accelerometer"
+        data['gyroscope'] = "Gyroscope"
+        data['magnetometer'] = "Magnetometer"
+        data['imu'] = "IMU"
+        return jsonify(data)
+
     else:
         if origin == 'temperature':
             return redirect('/sensors/temperature')
@@ -256,4 +268,11 @@ def imu_history():
 # Debug
 if __name__ =='__main__':
     app.run(debug=True)
+
+
+
+
+
+
+
 

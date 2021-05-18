@@ -237,9 +237,11 @@ for i in range(1,n):
     conn.commit()
 
 
-
 # Commit the changes
 conn.commit()
+
+# Sleep for 5 seconds
+time.sleep(5)
 
 # Close connection
 conn.close()
