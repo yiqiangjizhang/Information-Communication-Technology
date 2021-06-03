@@ -38,31 +38,31 @@ conn.commit()
 
 # Insert new sensors into table
 # 1. Pressure sensor
-new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Pressure', 'Pressure sensor', 0)"
+new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Pressure_sensor', 'Pressure sensor', 0)"
 cur.execute(new_sensor)
 
 # 2. Humidity sensor
-new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Humidity', 'Humidity sensor', 0)"
+new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Humidity_sensor', 'Humidity sensor', 0)"
 cur.execute(new_sensor)
 
 # 3. Temperature sensor
-new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Temperature', 'Temperature sensor', 0)"
+new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Temperature_sensor', 'Temperature sensor', 0)"
 cur.execute(new_sensor)
 
 # 4. Magnetometer (Compass) sensor
-new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Magnetometer', 'Magnetometer (Compass) sensor', 0)"
+new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Magnetometer_sensor', 'Magnetometer (Compass) sensor', 0)"
 cur.execute(new_sensor)
 
 # 5. Accelerometer sensor
-new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Accelerometer', 'Accelerometer sensor', 0)"
+new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Accelerometer_sensor', 'Accelerometer sensor', 0)"
 cur.execute(new_sensor)
 
 # 6. Gyroscope sensor
-new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Gyroscope', 'Gyroscope sensor', 0)"
+new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('Gyroscope_sensor', 'Gyroscope sensor', 0)"
 cur.execute(new_sensor)
 
 # 7. IMU sensor
-new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('IMU', 'IMU sensor (orientation processed by IMU)', 0)"
+new_sensor = "INSERT INTO sensors (name, description, compound) VALUES ('IMU_sensor', 'IMU sensor (orientation processed by IMU)', 0)"
 cur.execute(new_sensor)
 
 # Commit the changes

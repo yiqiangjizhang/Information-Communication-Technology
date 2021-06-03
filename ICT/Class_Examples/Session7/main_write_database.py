@@ -25,15 +25,15 @@ sqlite_file = "database.db"
 # Connection
 conn = sqlite3.connect(sqlite_file)
 
-# Cursor for commands and accessing information
-cur = conn.cursor()
-
 # If database is not being used (not opened)
-if is_open(conn) == False:
+if is_open(conn):
+
+    # Cursor for commands and accessing information
+    cur = conn.cursor()
 
     ## Get measures
     # NUmber of measures
-    n = 5
+    n = 3
 
     for i in range(1,n):
 
@@ -82,51 +82,51 @@ if is_open(conn) == False:
         yaw_IMU = o["yaw"]
 
         # Write Pressure measurement from Pressure sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (1, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pressure,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (1, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(pressure,current_time)
         cur.execute(query)
 
         # Write Temperature measurement from Pressure sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (2, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp_p,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (2, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(temp_p,current_time)
         cur.execute(query)
 
         # Write Humidity measurement from HUmidity sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (3, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(humidity,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (3, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(humidity,current_time)
         cur.execute(query)
 
         # Write Temperature measurement from Humidity sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (4, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp_h,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (4, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(temp_h,current_time)
         cur.execute(query)
 
         # Write Temperature measurement from Temperature sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (5, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(temp,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (5, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(temp,current_time)
         cur.execute(query)
 
         # Write Magnetometer (compass) measurement from Magnetometer sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (6, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(compass,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (6, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(compass,current_time)
         cur.execute(query)
 
         # Write Accelerometer measurement from Accelerometer sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (7, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_acc,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (7, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(pitch_acc,current_time)
         cur.execute(query)
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (8, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_acc,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (8, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(roll_acc,current_time)
         cur.execute(query)
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (9, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_acc,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (9, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(yaw_acc,current_time)
         cur.execute(query)
 
         # Write Gyroscope measurement from Gyroscope sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (10, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_gyro,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (10, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(pitch_gyro,current_time)
         cur.execute(query)
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (11, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_gyro,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (11, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(roll_gyro,current_time)
         cur.execute(query)
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (12, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_gyro,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (12, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(yaw_gyro,current_time)
         cur.execute(query)
 
         # Write IMU measurement from IMU (processed) sensor
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (13, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(pitch_IMU,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (13, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(pitch_IMU,current_time)
         cur.execute(query)
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (14, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(roll_IMU,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (14, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(roll_IMU,current_time)
         cur.execute(query)
-        query = "INSERT INTO measures (variable_id, measure, date) VALUES (15, {0}, '{1:%Y-%m-%d %H:%M%S.%f}')".format(yaw_IMU,current_time)
+        query = "INSERT INTO measures (variable_id, measure, date) VALUES (15, {0}, '{1:%Y-%m-%dT%H:%M%S.%fZ}')".format(yaw_IMU,current_time)
         cur.execute(query)
 
         # Save current end time

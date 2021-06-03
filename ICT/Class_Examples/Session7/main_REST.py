@@ -5,6 +5,7 @@ from sense_emu import SenseHat
 import datetime
 from flask import jsonify
 from flask import request
+import sqlite3
 
 sense = SenseHat()
 
@@ -17,6 +18,20 @@ app = Flask(__name__)
 def index():
     message = "Raspberry PI ICT REST Server"
     return message
+
+# Function to check if database is used by a process
+def is_open(conn):
+     try:
+        conn.cursor()
+        return True
+     except Exception as ex:
+        return False
+
+# Open database
+sqlite_file = "database.db"
+
+# Connection
+conn = sqlite3.connect(sqlite_file)
 
 
 # Create a new sensors route
@@ -197,6 +212,29 @@ def imu():
 def temp_history():
     from_date = request.args.get('from')
     to_date = request.args.get('to')
+
+    from_date_complete = from_date + "T00:00:00"
+    to_date_complete = to_date + "T00:00:00"
+
+    # TODO: Check datetime converti dtring to date time
+
+    # query = "SELECT sensors.name, variables.name, measures.measure, max(measures.date), variables.units FROM sensors, variables, measures WHERE sensors.id = variables.sensor_id AND variables.id = measures.variable_id GROUP BY variables.id"
+
+    query = "SELECT * FROM Temperature_sensor WHERE date > from_date_complete AND date < to_date_complete"
+
+    if is_open(conn):
+        # Cursor for commands and accessing information
+        cur = conn.cursor()
+
+        cur.execute(query)
+        rows = cur.fetchall()
+        print("Measures in database")
+        print(rows)
+        ######### ME HE QUEDADO AQUI (el query esta bien (LA compracion con el timepo)?, siempre me sale como que la database se esta usando)
+    else:
+        print("Database is currently being used")
+        # WRITE ERROR MSG
+
     return "From {0} to {1}".format(from_date,to_date)
 
 # Temperature from Pressure Sensors history
@@ -262,6 +300,7 @@ def imu_history():
     from_date = request.args.get('from')
     to_date = request.args.get('to')
     return "From {0} to {1}".format(from_date,to_date)
+
 
 
 
