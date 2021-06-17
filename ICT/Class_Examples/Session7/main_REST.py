@@ -6,6 +6,7 @@ import datetime
 from flask import jsonify
 from flask import request
 import sqlite3
+import sys
 
 sense = SenseHat()
 
@@ -25,6 +26,7 @@ def is_open(conn):
         conn.cursor()
         return True
      except Exception as ex:
+        print(ex)
         return False
 
 # Open database
@@ -210,108 +212,45 @@ def imu():
 @app.route('/sensors/temperature/history')
 # Request history 
 def temp_history():
+    conn = sqlite3.connect(sqlite_file)
     from_date = request.args.get('from')
     to_date = request.args.get('to')
 
     from_date_complete = from_date + "T00:00:00"
-    to_date_complete = to_date + "T00:00:00"
+    to_date_complete = to_date + "T23:59:59"
 
     # TODO: Check datetime converti dtring to date time
 
     # query = "SELECT sensors.name, variables.name, measures.measure, max(measures.date), variables.units FROM sensors, variables, measures WHERE sensors.id = variables.sensor_id AND variables.id = measures.variable_id GROUP BY variables.id"
 
-    query = "SELECT * FROM Temperature_sensor WHERE date > from_date_complete AND date < to_date_complete"
+    query = "SELECT * FROM measures WHERE date > '{0:}' AND date < '{1:}' AND variable_id = 5".format(from_date_complete , to_date_complete)
 
-    if is_open(conn):
+    if True:
+    # if is_open(conn):
         # Cursor for commands and accessing information
-        cur = conn.cursor()
+        rows = None
+        try:
+            print("A",file=sys.stderr)
+            cur = conn.cursor()
+            print("B",file=sys.stderr)
 
-        cur.execute(query)
-        rows = cur.fetchall()
-        print("Measures in database")
-        print(rows)
-        ######### ME HE QUEDADO AQUI (el query esta bien (LA compracion con el timepo)?, siempre me sale como que la database se esta usando)
+            cur.execute(query)
+            rows = cur.fetchall()
+            print("Measures in database",file=sys.stderr)
+            print(rows,file=sys.stderr)
+        except Exception as e:
+            print(e, file=sys.stderr)
+
     else:
         print("Database is currently being used")
         # WRITE ERROR MSG
 
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Temperature from Pressure Sensors history
-@app.route('/sensors/temperature/presssure/history')
-# Request history 
-def temp_p_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Temperature from Humidity sensor history
-@app.route('/sensors/temperature/humidity/history')
-# Request history 
-def temp_h_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Pressure history
-@app.route('/sensors/pressure/history')
-# Request history 
-def pressure_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# HUmidity history
-@app.route('/sensors/humidity/history')
-# Request history 
-def humidity_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Compass history
-@app.route('/sensors/compass/history')
-# Request history 
-def compass_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Accelerometer history
-@app.route('/sensors/accelerometer/history')
-# Request history 
-def accelerometer_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# Gyroscope history
-@app.route('/sensors/accelerometer/history')
-# Request history 
-def gyroscope_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-# IMU history
-@app.route('/sensors/imu/history')
-# Request history 
-def imu_history():
-    from_date = request.args.get('from')
-    to_date = request.args.get('to')
-    return "From {0} to {1}".format(from_date,to_date)
-
-
+    return jsonify(rows)
 
 
 # Debug
 if __name__ =='__main__':
     app.run(debug=True)
-
-
-
-
-
 
 
 
